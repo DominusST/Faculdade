@@ -11,7 +11,7 @@ namespace LojaVirtual
         public decimal Preco { get; }
         public string Categoria { get; }
 
-        public Produto(int Id, string nome, decimal preco, string categoria)
+        public Produto(int id, string nome, decimal preco, string categoria)
         {
             if (preco <= 0)
             {
@@ -76,11 +76,11 @@ namespace LojaVirtual
 
     class DescontoCategoriaEletronica : IDescontoStrategy
     {
-        public decimal CalcularDesconto(ItemPedido item)
+        public decimal CalcularDescontos(ItemPedido item)
         {
             if (item.Produto.Categoria == "Eletronico")
             {
-                return item.Subtotal() + 0.10m;
+                return item.Subtotal() * 0.10m;
             }
             return 0;
         }
@@ -88,7 +88,7 @@ namespace LojaVirtual
 
     class DescontoQuatidade : IDescontoStrategy
     {
-        public decimal CalcularDesconto(ItemPedido item)
+        public decimal CalcularDescontos(ItemPedido item)
         {
             if (item.Quantidade >= 3)
             {
@@ -105,14 +105,14 @@ namespace LojaVirtual
         public int Id { get; }
         public Cliente Cliente { get; }
         public List<ItemPedido> itens { get; }
-        public DateTime data { get; }
+        public DateTime Data { get; }
         public decimal Total { get; }
 
-        public Pedido(int id, Cliente cliente, List<ItemPedido> itens, IDescontoStrategy desconto)
+        public Pedido(int id, Cliente cliente, List<ItemPedido> itensPedido, IDescontoStrategy desconto)
         {
             Id = id;
             Cliente = cliente;
-            itens = itens;
+            itens = itensPedido;
             Data = DateTime.Now;
             Total = CalcularTotal(itens, desconto);
         }
@@ -133,7 +133,7 @@ namespace LojaVirtual
         //FABRICA
 
 
-        static class PedidoFactory
+        public static class PedidoFactory
         {
             private static int contador = 1;
 
@@ -185,7 +185,7 @@ namespace LojaVirtual
 
         public Pedido CriarPedido(Cliente cliente, List<ItemPedido> itens, IDescontoStrategy desconto)
         {
-            var pedido = PedidoFactory.CriarPedido(cliente, itens, desconto);
+            var pedido = Pedido.PedidoFactory.CriarPedido(cliente, itens, desconto);
             repo.Salvar(pedido);
             logger.Log($"Pedido criado - ID: {pedido.Id}, Cliente: {cliente.Nome}");
             return pedido;
@@ -202,7 +202,7 @@ namespace LojaVirtual
                 Console.WriteLine($"Cliente: {pedido.Cliente.Nome}");
                 Console.WriteLine($"Data: {pedido.Data}");
                 Console.WriteLine("Itens:");
-                foreach (var item in pedido.Itens)
+                foreach (var item in pedido.itens)
                 {
                     Console.WriteLine($"- {item.Produto.Nome} x{item.Quantidade} - R$ {item.Subtotal():F2}");
                 }
@@ -235,7 +235,7 @@ namespace LojaVirtual
 
                 IDescontoStrategy desconto = new DescontoQuatidade();
 
-                var pedido = servico.CriarPedido(cliente, itens, desconto);
+                var pedido = servico.CriarPedido(cliente, itens, desconto)!;
 
                 servico.ListrPedidos();
 
