@@ -212,6 +212,37 @@ namespace LojaVirtual
 
             }
         }
+
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                var repo = new PedidoRepository();
+                var logger = new Logger();
+                var servico = new PedidoService(repo, logger);
+
+                var p1 = new Produto(1, "Notebook", 3000, "Eletronico");
+                var p2 = new Produto(2, "Teclado", 200, "Periferico");
+                var p3 = new Produto(3, "HD Externo", 500, "Eletronico");
+
+                var cliente = new Cliente(1, "Maria", "maria@gmail.com", "12344321");
+
+                var itens = new Lista<ItemPedido>
+                {
+                    new ItemPedido(p1, 1),
+                    new ItemPedido(p3, 3)
+                };
+
+                IDescontoStrategy desconto = new DescontoQuatidade();
+
+                var pedido = servico.CriarPedido(cliente, itens, desconto);
+
+                servico.ListarPedidos();
+
+
+                Console.ReadKey();
+            }
+        }
     }
 
 
