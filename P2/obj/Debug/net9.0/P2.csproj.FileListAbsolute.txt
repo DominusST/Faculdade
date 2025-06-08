@@ -1,0 +1,15 @@
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\P2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\P2.AssemblyInfoInputs.cache
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\P2.AssemblyInfo.cs
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\P2.csproj.CoreCompileInputs.cache
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\P2.sourcelink.json
+C:\Users\Nogueira\Documents\Faculdade\P2\bin\Debug\net9.0\P2.exe
+C:\Users\Nogueira\Documents\Faculdade\P2\bin\Debug\net9.0\P2.deps.json
+C:\Users\Nogueira\Documents\Faculdade\P2\bin\Debug\net9.0\P2.runtimeconfig.json
+C:\Users\Nogueira\Documents\Faculdade\P2\bin\Debug\net9.0\P2.dll
+C:\Users\Nogueira\Documents\Faculdade\P2\bin\Debug\net9.0\P2.pdb
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\P2.dll
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\refint\P2.dll
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\P2.pdb
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\P2.genruntimeconfig.cache
+C:\Users\Nogueira\Documents\Faculdade\P2\obj\Debug\net9.0\ref\P2.dll
