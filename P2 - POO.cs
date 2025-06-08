@@ -67,7 +67,7 @@ namespace LojaVirtual
         decimal CalcularDescontos(ItemPedido item);
     }
 
-    //Experimenta Codar com a musica Cartoon - Why we Lose, é gostozinha ouvir kkkk
+
 
     class SemDesconto : IDescontoStrategy
     {
@@ -81,6 +81,18 @@ namespace LojaVirtual
             if (item.Produto.Categoria == "Eletronico")
             {
                 return item.Subtotal() + 0.10m;
+            }
+            return 0;
+        }
+    }
+
+    class DescontoQuatidade : IDescontoStrategy
+    {
+        public decimal CalcularDesconto(ItemPedido item)
+        {
+            if (item.Quantidade >= 3)
+            {
+                return item.Subtotal() * 0.15m;
             }
             return 0;
         }
