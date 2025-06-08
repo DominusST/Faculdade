@@ -146,6 +146,23 @@ namespace LojaVirtual
         }
     }
 
+    //REPOSITORIO
+
+    class PedidoRepository
+    {
+        private Lista<Pedido> pedidos = new Lista<Pedido>();
+
+        public void Salvar(Pedido pedido)
+        {
+            pedidos.Add(pedido);
+        }
+
+        public Lista<Pedido> Listar()
+        {
+            return pedidos;
+        }
+    }
+
 
 
 
