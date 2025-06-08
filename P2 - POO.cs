@@ -163,6 +163,57 @@ namespace LojaVirtual
         }
     }
 
+    class Logger
+    {
+        public void Log(string mensagem)
+        {
+            Console.WriteLine($"[LOG] {mensagem}");
+        }
+
+    }
+
+    class PedidoService
+    {
+        private PedidoRepository repo;
+        private Logger logger;
+
+        public PedidoService(PedidoRepository repo, Logger logger)
+        {
+            this.repo = repo;
+            this.logger = logger;
+        }
+
+        public Pedido CriarPedido(Cliente cliente, Lista<ItemPedido> itens, IDescontoStrategy desconto)
+        {
+            var pedido = PedidoFactory.CriarPedido(cliente, itens, desconto);
+            repo.Salvar(pedido);
+            logger.Log($"Pedido criado - ID: {pedido.Id}, Cliente: {cliente.Nome}");
+            return pedido;
+        }
+
+        public void ListarPedidos()
+        {
+            var pedidos = repo.Listar();
+
+            foreach (var pedido in pedidos)
+            {
+                Console.WriteLine("=================");
+                Console.WriteLine($"Pedido ID: {pedido.Id}");
+                Console.WriteLine($"Cliente: {pedido.Cliente.Nome}");
+                Console.WriteLine($"Data: {pedido.Data}");
+                Console.WriteLine("Itens:");
+                foreach (var item in pedido.Itens)
+                {
+                    Console.WriteLine($"- {item.Produto.Nome} x{item.Quantidade} - R$ {item,Subtotal():F2}");
+                }
+                Console.WriteLine($"Total com desconto: R$ {pedido.Total:F2}");
+                Console.WriteLine("=================");
+
+
+            }
+        }
+    }
+
 
 
 
