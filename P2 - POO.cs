@@ -92,12 +92,59 @@ namespace LojaVirtual
         {
             if (item.Quantidade >= 3)
             {
-                return item.Subtotal() * 0.15m;
+                return item.Subtotal() * 0.15m; //esse "m" com ele eu to forçando o tipo decimal
             }
             return 0;
         }
     }
-    
+
+    //PEDIDOS
+
+    class Pedido
+    {
+        public int Id { get; }
+        public Cliente Cliente { get; }
+        public Lista<ItemPedido> itens { get; }
+        public DateTime data { get; }
+        public decimal Total { get; }
+
+        public Pedido(int id, Cliente cliente, Lista<ItemPedido> itens, IDescontoStrategy desconto)
+        {
+            Id = id;
+            Cliente = cliente;
+            itens = itens;
+            Data = DataTime.Now;
+            Total = CalcularTotal(itens, desconto);
+        }
+
+        private decimal CalcularTotal(Lista<ItemPedido> itens, IDescontoStrategy desconto)
+        {
+            decimal total = 0;
+            foreach (var item in itens)
+            {
+                var descontoAplicado = desconto.CalcularDescontos(item);
+                total += item.Subtotal() - descontoAplicado;
+
+            }
+            return total;
+        }
+
+
+        //FABRICA
+
+
+        static class PedidoFactory
+        {
+            private static int contados = 1;
+
+            public static Pedido CriarPedido(Cliente cliente, Lista<ItemPedido> itens, IDescontoStrategy desconto)
+            {
+                var pedido = new Pedido(contador, cliente, itens, desconto);
+                contador++;
+                return pedido;
+            }
+        }
+    }
 
 
 
