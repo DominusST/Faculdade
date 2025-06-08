@@ -22,7 +22,23 @@ namespace LojaVirtual
             Nome = nome;
             Preco = preco;
             Categoria = categoria;
-            
+
+        }
+    }
+
+    class Cliente
+    {
+        public int Id { get; }
+        public string Nome { get; }
+        public string Email { get; }
+        public string CPF { get; }
+
+        public Cliente(int id, string nome, string email, string cpf)
+        {
+            Id = id;
+            Nome = nome;
+            Email = email;
+            CPF = cpf;
         }
     }
 
