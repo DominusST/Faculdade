@@ -42,4 +42,22 @@ namespace LojaVirtual
         }
     }
 
+    class ItemPedido
+    {
+        public Produto Produto { get; }
+        public int Quantidade { get; }
+
+        public ItemPedido(Produto produto, int quantidade)
+        {
+            Produto = produto;
+            Quantidade = quantidade;
+        }
+
+        public decimal Subtotal()
+        {
+            return Produto.Preco * Quantidade;
+        }
+
+    }
+
 }
