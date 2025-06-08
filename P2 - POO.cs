@@ -18,7 +18,7 @@ namespace LojaVirtual
                 throw new ArgumentException("Preço Invalido");
             }
 
-            Id = Id;
+            Id = id;
             Nome = nome;
             Preco = preco;
             Categoria = categoria;
@@ -104,20 +104,20 @@ namespace LojaVirtual
     {
         public int Id { get; }
         public Cliente Cliente { get; }
-        public Lista<ItemPedido> itens { get; }
+        public List<ItemPedido> itens { get; }
         public DateTime data { get; }
         public decimal Total { get; }
 
-        public Pedido(int id, Cliente cliente, Lista<ItemPedido> itens, IDescontoStrategy desconto)
+        public Pedido(int id, Cliente cliente, List<ItemPedido> itens, IDescontoStrategy desconto)
         {
             Id = id;
             Cliente = cliente;
             itens = itens;
-            Data = DataTime.Now;
+            Data = DateTime.Now;
             Total = CalcularTotal(itens, desconto);
         }
 
-        private decimal CalcularTotal(Lista<ItemPedido> itens, IDescontoStrategy desconto)
+        private decimal CalcularTotal(List<ItemPedido> itens, IDescontoStrategy desconto)
         {
             decimal total = 0;
             foreach (var item in itens)
@@ -135,9 +135,9 @@ namespace LojaVirtual
 
         static class PedidoFactory
         {
-            private static int contados = 1;
+            private static int contador = 1;
 
-            public static Pedido CriarPedido(Cliente cliente, Lista<ItemPedido> itens, IDescontoStrategy desconto)
+            public static Pedido CriarPedido(Cliente cliente, List<ItemPedido> itens, IDescontoStrategy desconto)
             {
                 var pedido = new Pedido(contador, cliente, itens, desconto);
                 contador++;
@@ -150,14 +150,14 @@ namespace LojaVirtual
 
     class PedidoRepository
     {
-        private Lista<Pedido> pedidos = new Lista<Pedido>();
+        private List<Pedido> pedidos = new List<Pedido>();
 
         public void Salvar(Pedido pedido)
         {
             pedidos.Add(pedido);
         }
 
-        public Lista<Pedido> Listar()
+        public List<Pedido> Listr()
         {
             return pedidos;
         }
@@ -183,7 +183,7 @@ namespace LojaVirtual
             this.logger = logger;
         }
 
-        public Pedido CriarPedido(Cliente cliente, Lista<ItemPedido> itens, IDescontoStrategy desconto)
+        public Pedido CriarPedido(Cliente cliente, List<ItemPedido> itens, IDescontoStrategy desconto)
         {
             var pedido = PedidoFactory.CriarPedido(cliente, itens, desconto);
             repo.Salvar(pedido);
@@ -191,9 +191,9 @@ namespace LojaVirtual
             return pedido;
         }
 
-        public void ListarPedidos()
+        public void ListrPedidos()
         {
-            var pedidos = repo.Listar();
+            var pedidos = repo.Listr();
 
             foreach (var pedido in pedidos)
             {
@@ -204,7 +204,7 @@ namespace LojaVirtual
                 Console.WriteLine("Itens:");
                 foreach (var item in pedido.Itens)
                 {
-                    Console.WriteLine($"- {item.Produto.Nome} x{item.Quantidade} - R$ {item,Subtotal():F2}");
+                    Console.WriteLine($"- {item.Produto.Nome} x{item.Quantidade} - R$ {item.Subtotal():F2}");
                 }
                 Console.WriteLine($"Total com desconto: R$ {pedido.Total:F2}");
                 Console.WriteLine("=================");
@@ -227,7 +227,7 @@ namespace LojaVirtual
 
                 var cliente = new Cliente(1, "Maria", "maria@gmail.com", "12344321");
 
-                var itens = new Lista<ItemPedido>
+                var itens = new List<ItemPedido>
                 {
                     new ItemPedido(p1, 1),
                     new ItemPedido(p3, 3)
@@ -237,7 +237,7 @@ namespace LojaVirtual
 
                 var pedido = servico.CriarPedido(cliente, itens, desconto);
 
-                servico.ListarPedidos();
+                servico.ListrPedidos();
 
 
                 Console.ReadKey();
